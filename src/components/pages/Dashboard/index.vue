@@ -1,152 +1,177 @@
 <template>
-  <div>
-    <div class="tile is-ancestor">
-      <div class="tile is-parent">
-        <article class="tile is-child box">
-          <p class="title">One</p>
-          <p class="subtitle">Subtitle</p>
-        </article>
-      </div>
-      <div class="tile is-parent">
-        <article class="tile is-child box">
-          <p class="title">Two</p>
-          <p class="subtitle">Subtitle</p>
-        </article>
-      </div>
-      <div class="tile is-parent">
-        <article class="tile is-child box">
-          <p class="title">Three</p>
-          <p class="subtitle">Subtitle</p>
-        </article>
-      </div>
-      <div class="tile is-parent">
-        <article class="tile is-child box">
-          <p class="title">Four</p>
-          <p class="subtitle">Subtitle</p>
-        </article>
-      </div>
+<div>
+  <div class="tile is-ancestor">
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+          <iframe  class="content" src="http://cotwo-web.com"  
+        style=" width: 600px;  height:400px;"  scrolling="no"></iframe>
+      </article>
     </div>
-
-    <div class="tile is-ancestor">
+    <div style="width:400px;" >
       <div class="tile is-parent">
         <article class="tile is-child box">
-          <h4 class="title">Five</h4>
-          <div class="content">
-            <chart :type="'doughnut'" :data="chartData"></chart>
+           <div class="block styles-box">
+           <label>Sensor 1 | {{s1}} %</label>
+            <progress-bar :type="setLabel(s1)" :value="s1" :max="100"></progress-bar>
           </div>
         </article>
       </div>
       <div class="tile is-parent">
         <article class="tile is-child box">
-          <h4 class="title">Six</h4>
-          <div class="content">
-            <chart :type="'pie'" :data="chartData"></chart>
+          <label>Sensor 2 | {{s2}} %</label>
+           <div class="block styles-box">
+            <progress-bar :type="setLabel(s2)" :value="s2"  :max="100"></progress-bar>
+          </div>
+        </article>
+      </div>
+      <div class="tile is-parent">
+        <article class="tile is-child box">
+          <label>Sensor 3 | {{s3}} %</label>
+           <div class="block styles-box">
+            <progress-bar :type="setLabel(s3)" :value="s3" :max="100"></progress-bar>
+          </div>
+        </article>
+      </div>
+      <div class="tile is-parent">
+        <article class="tile is-child box">
+          <label>Sensor 4 | {{s4}} %</label>
+           <div class="block styles-box">
+            <progress-bar :type="setLabel(s4)" :value="s4"  :max="100"></progress-bar>
           </div>
         </article>
       </div>
     </div>
-
-    <div class="tile is-ancestor">
-      <div class="tile is-vertical is-9">
-        <div class="tile">
-          <div class="tile is-parent">
-            <article class="tile is-child box">
-              <p class="title">Seven</p>
-              <p class="subtitle">Subtitle</p>
-              <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-              </div>
-            </article>
-          </div>
-          <div class="tile is-8 is-parent">
-            <article class="tile is-child box">
-              <p class="title">Eight</p>
-              <p class="subtitle">Subtitle</p>
-              <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-              </div>
-            </article>
-          </div>
-        </div>
-        <div class="tile">
-          <div class="tile is-8 is-parent">
-            <article class="tile is-child box">
-              <p class="title">Nine</p>
-              <p class="subtitle">Subtitle</p>
-              <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-              </div>
-            </article>
-          </div>
-          <div class="tile is-parent">
-            <article class="tile is-child box">
-              <p class="title">Ten</p>
-              <p class="subtitle">Subtitle</p>
-              <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </div>
-      <div class="tile is-parent">
-        <article class="tile is-child box">
-          <div class="content">
-            <p class="title">Eleven</p>
-            <p class="subtitle">Subtitle</p>
-            <div class="content">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus diam, consequat gravida libero rhoncus ut. Morbi maximus, leo sit amet vehicula eleifend, nunc dui porta orci, quis semper odio felis ut quam.</p>
-              <p>Integer sollicitudin, tortor a mattis commodo, velit urna rhoncus erat, vitae congue lectus dolor consequat libero. Donec leo ligula, maximus et pellentesque sed, gravida a metus. Cras ullamcorper a nunc ac porta. Aliquam ut aliquet lacus, quis faucibus libero. Quisque non semper leo.</p>
-            </div>
-          </div>
-        </article>
-      </div>
+    
+  </div>
+  <div class="tile is-ancestor">
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+        <h4 class="title">Wind Sensor 1</h4>
+        <chart :type="'radar'" :data="waveData" :options="options"></chart>
+      </article>
+    </div>
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+       <h4 class="title">Wind Sensor 2</h4>
+        <chart :type="'radar'" :data="waveData" :options="options"></chart>
+      </article>
+    </div>
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+        <h4 class="title">Wind Sensor 3</h4>
+        <chart :type="'radar'" :data="waveData" :options="options"></chart>
+      </article>
+    </div>
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+        <h4 class="title">Wind Sensor 4</h4>
+        <chart :type="'radar'" :data="waveData" :options="options"></chart>
+      </article>
     </div>
   </div>
+  
+</div>
 </template>
 
 <script>
 import Chart from '../../ui/Chart'
+import ProgressBar from '../../ui/ProgressBar'
+import $ from 'jquery'
 
 export default {
   components: {
-    Chart
+    Chart,
+    ProgressBar
   },
 
   data () {
     return {
-      data: [300, 50, 100]
+      s1: 0,
+      s2: 0,
+      s3: 0,
+      s4: 0,
+      labels: ['Sleeping', 'Designing', 'Coding', 'Cycling'],
+
+      options: {
+        segmentShowStroke: false
+      },
+      backgroundColor: ['#1fc8db'],
+
+      labels_2: ['North', 'NE', 'East', 'SE', 'South', 'SW', 'Weast', 'NW'],
+      data_2: [1, 9, 3, 4, 5, 6, 7, 8].map(e => Math.sin(e) * 25 + 25)
     }
   },
 
   computed: {
-    chartData () {
+    waveData () {
       return {
-        labels: [
-          'Red',
-          'Blue',
-          'Yellow'
-        ],
+        labels: this.labels_2,
         datasets: [{
-          data: this.data,
-          backgroundColor: [
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56'
-          ]
+          label: 'My Radar',
+          data: this.data_2,
+          backgroundColor: this.backgroundColor[0]
         }]
+      }
+    }
+  },
+
+  methods: {
+    setLabel: function (val) {
+      if (val >= 0 && val <= 25) {
+        return 'success'
+      } else if (val > 25 && val <= 50) {
+        return 'primary'
+      } else if (val > 50 && val <= 75) {
+        return 'warning'
+      } else {
+        return 'danger'
       }
     }
   },
 
   created () {
     setInterval(() => {
+      this.data_2.unshift(this.data_2.pop())
+    }, 337)
+    setInterval(() => {
       // https://vuejs.org/guide/list.html#Mutation-Methods
-      // this.data.unshift(this.data.pop())
-      this.data.forEach((item, i) => {
-        this.data.$set(i, Math.ceil(Math.random() * 1000))
+      // this.s2.sort(this.data.pop())
+      // console.log('a')
+      var that = this
+      $.ajax({
+        url: 'http://cotwo-api.com/v1/movements',
+        method: 'GET',
+        dataType: 'json',
+        async: true,
+        success: function (data) {
+          if (data.active_sensors.length === 0) {
+            that.s1 = 0
+            that.s2 = 0
+            that.s3 = 0
+            that.s4 = 0
+          }
+          $.each(data.active_sensors, function (sensor, value) {
+            if ('group' in value) {
+              if (sensor === '0001') {
+                that.s1 = value.group.avg
+              } else if (sensor === '0002') {
+                that.s2 = value.group.avg
+              } else if (sensor === '0003') {
+                that.s3 = value.group.avg
+              } else if (sensor === '0004') {
+                that.s4 = value.group.avg
+              } else {
+              }
+            } else {
+            }
+          })
+        }
       })
-    }, 1024)
+      // this.s1 = Math.random() * 80
+      // this.s2 = Math.random() * 80
+      // this.s3 = Math.random() * 80
+      // this.s4 = Math.random() * 80
+    }, 3000)
   }
 }
 </script>
