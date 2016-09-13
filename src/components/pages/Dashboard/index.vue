@@ -9,7 +9,7 @@
     </div>
     <div style="width:400px;" >
       <div class="tile is-parent">
-        <article class="tile is-child box">
+        <article class="tile is-child box"> 
            <div class="block styles-box">
            <label>Sensor 1 | {{s1}} %</label>
             <progress-bar :type="setLabel(s1)" :value="s1" :max="100"></progress-bar>
@@ -46,11 +46,11 @@
   <div class="tile is-ancestor">
     <div class="tile is-parent">
       <article class="tile is-child box">
-        <h4 class="title">Wind Sensor 1</h4>
-        <chart :type="'radar'" :data="waveData" :options="options"></chart>
+        <h4 class="title"></h4>
+      <chartist class="lines-bars" :type="'Bar'" :data="linesData" :options="linesOptions"></chartist>
       </article>
     </div>
-    <div class="tile is-parent">
+    <!-- <div class="tile is-parent">
       <article class="tile is-child box">
        <h4 class="title">Wind Sensor 2</h4>
         <chart :type="'radar'" :data="waveData" :options="options"></chart>
@@ -67,7 +67,7 @@
         <h4 class="title">Wind Sensor 4</h4>
         <chart :type="'radar'" :data="waveData" :options="options"></chart>
       </article>
-    </div>
+    </div> -->
   </div>
   
 </div>
@@ -76,41 +76,47 @@
 <script>
 import Chart from '../../ui/Chart'
 import ProgressBar from '../../ui/ProgressBar'
+import Chartist from '../../ui/Chartist'
 import $ from 'jquery'
 
 export default {
   components: {
     Chart,
-    ProgressBar
+    ProgressBar,
+    Chartist
   },
 
   data () {
     return {
+      series: [
+        [0, 0, 0, 0]
+      ],
+      labels: [''],
+      linesOptions: {
+        fullWidth: true,
+        chartPadding: {
+          right: 40
+        }
+      },
+      ws1: '',
       s1: 0,
       s2: 0,
       s3: 0,
       s4: 0,
-      labels: ['Sleeping', 'Designing', 'Coding', 'Cycling'],
-
+      // labels: ['Sleeping', 'Designing', 'Coding', 'Cycling'],
       options: {
         segmentShowStroke: false
       },
-      backgroundColor: ['#1fc8db'],
-
-      labels_2: ['North', 'NE', 'East', 'SE', 'South', 'SW', 'Weast', 'NW'],
-      data_2: [1, 9, 3, 4, 5, 6, 7, 8].map(e => Math.sin(e) * 25 + 25)
+      backgroundColor: ['#4ae748']
     }
   },
 
   computed: {
-    waveData () {
+    linesData () {
       return {
-        labels: this.labels_2,
-        datasets: [{
-          label: 'My Radar',
-          data: this.data_2,
-          backgroundColor: this.backgroundColor[0]
-        }]
+        labels: this.labels,
+        series: this.series,
+        backgroundColor: this.backgroundColor[0]
       }
     }
   },
@@ -131,8 +137,14 @@ export default {
 
   created () {
     setInterval(() => {
-      this.data_2.unshift(this.data_2.pop())
-    }, 337)
+      // https://vuejs.org/guide/list.html#Mutation-Methods
+      // this.series.pop()
+      // this.series.pop()
+      // this.series.push(
+      //   [Math.random() * 10, Math.random() * 20, Math.random() * 10, Math.random() * 20],
+      //   [Math.random() * 10, Math.random() * 20, Math.random() * 10, Math.random() * 20])
+      // // this.series.shift(this.series.pop())
+    }, 1000)
     setInterval(() => {
       // https://vuejs.org/guide/list.html#Mutation-Methods
       // this.s2.sort(this.data.pop())
@@ -144,6 +156,20 @@ export default {
         dataType: 'json',
         async: true,
         success: function (data) {
+          that.labels.pop()
+          that.labels.pop()
+          that.labels.pop()
+          that.labels.pop()
+          that.labels.push('W1')
+          that.labels.push('W2')
+          that.labels.push('W3')
+          that.labels.push('W4')
+
+          that.series.pop()
+          that.series.pop()
+          that.series.push(
+            [Math.random() * 10, Math.random() * 20, Math.random() * 10, Math.random() * 20],
+            [Math.random() * 10, Math.random() * 20, Math.random() * 10, Math.random() * 20])
           if (data.active_sensors.length === 0) {
             that.s1 = 0
             that.s2 = 0
@@ -171,7 +197,7 @@ export default {
       // this.s2 = Math.random() * 80
       // this.s3 = Math.random() * 80
       // this.s4 = Math.random() * 80
-    }, 3000)
+    }, 2000)
   }
 }
 </script>
