@@ -8,6 +8,16 @@ export default [
     link: 'Form',
     label: 'Newsletter',
     icon: 'fa-laptop'
+  },
+  {
+    link: '',
+    label: 'Energy Performance',
+    icon: 'fa-cogs'
+  },
+  {
+    link: '',
+    label: 'Reports',
+    icon: 'fa-file'
   }
   // ,
   // {
