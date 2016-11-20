@@ -5,60 +5,60 @@
 </template>
 
 <script>
-import Datepicker from './datepicker/Datepicker'
+// import Datepicker from './datepicker/Datepicker'
 
-export default {
-  partials: {
-    singleInput: require('./datepicker/singleInput.html'),
-    wrapperInput: require('./datepicker/wrapperInput.html')
-  },
-  props: {
-    alignment: String,
-    config: {
-      type: Object,
-      default () {
-        return {}
-      }
-    },
-    l10n: {
-      type: Object,
-      default () {
-        return {}
-      }
-    },
-    placeholder: {
-      type: String,
-      default: 'Pick date'
-    },
-    readonly: Boolean,
-    value: String
-  },
+// export default {
+//   partials: {
+//     // singleInput: require('./datepicker/singleInput.html'),
+//     wrapperInput: require('./datepicker/wrapperInput.html')
+//   },
+//   props: {
+//     alignment: String,
+//     config: {
+//       type: Object,
+//       default () {
+//         return {}
+//       }
+//     },
+//     l10n: {
+//       type: Object,
+//       default () {
+//         return {}
+//       }
+//     },
+//     placeholder: {
+//       type: String,
+//       default: 'Pick date'
+//     },
+//     readonly: Boolean,
+//     value: String
+//   },
 
-  ready () {
-    this.datepicker = new Datepicker(this.$el.nextSibling, this.config, this.l10n)
-    this.datepicker.set('onChange', (d, s) => {
-      this.$set('value', s)
-    })
-  },
+//   ready () {
+//     this.datepicker = new Datepicker(this.$el.nextSibling, this.config, this.l10n)
+//     this.datepicker.set('onChange', (d, s) => {
+//       this.$set('value', s)
+//     })
+//   },
 
-  beforeDestroy () {
-    this.datepicker.destroy()
-  },
+//   beforeDestroy () {
+//     this.datepicker.destroy()
+//   },
 
-  computed: {
-    wrap () {
-      return !!this.config.wrap
-    },
-    name () {
-      return this.wrap ? 'wrapperInput' : 'singleInput'
-    }
-  }
+//   computed: {
+//     wrap () {
+//       return !!this.config.wrap
+//     },
+//     name () {
+//       return this.wrap ? 'wrapperInput' : 'singleInput'
+//     }
+//   }
 
-}
+// }
 </script>
 
 <style lang="stylus">
-$calendar_background = #ffffff
+/*$calendar_background = #ffffff
 $calendar_border_color = #d3d6db
 
 $months_color = #111
@@ -79,5 +79,5 @@ $selected_day_background = #1fc8db
   border-top 0
 
 .flatpickr-days + .flatpickr-time
-  border-top 1px solid $calendar_border_color
+  border-top 1px solid $calendar_border_color*/
 </style>
