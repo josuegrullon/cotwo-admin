@@ -224,7 +224,10 @@ export default {
         let diffB = moment().diff(moment(sensors[1].updated), 'seconds')
         let diffC = moment().diff(moment(sensors[2].updated), 'seconds')
         let diffD = moment().diff(moment(sensors[3].updated), 'seconds')
-
+        this.ppm_1 = 0
+        this.ppm_2 = 0
+        this.ppm_3 = 0
+        this.ppm_4 = 0
         $.each(data.active_sensors, (sensor, value) => {
           if ('group' in value) {
             if (sensor === '0001') {
@@ -247,6 +250,7 @@ export default {
           this.w_a = this.ppm_1 = 0
           this.windDir_1 = '--'
           series[0] = [0, 0, 0, 0, 0]
+          this.s1 = 0
         }
         if (diffB > interval) {
           this.w_b = this.ppm_2 = 0
@@ -264,6 +268,7 @@ export default {
           this.w_d = this.ppm_4 = 0
           this.windDir_4 = '--'
           series[3] = [0, 0, 0, 0, 0]
+          this.s4 = 0
         }
 
         return series
