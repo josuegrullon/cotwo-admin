@@ -8,23 +8,41 @@
         style=" width: 100%;  height:400px;"  scrolling="no"></iframe>
          <div class="tile is-parent">
       <article class="tile is-child box" style="width:110px; height:105px;">
-      <label>Direction 1: </label>
+        <p>
+          <label>Direction 1: </label>
           <b>{{windDir_1}}</b>
+        </p>
+        <p>
+            <label>Approximate Distance: </label>
+            <b>{{  Math.round((w_a * 0.26) * 100) / 100}}m</b>
+           </p>
       </article> 
       <article class="tile is-child box" style="width:110px; height:105px;">
       <label>Direction 2: </label>
           <b>{{windDir_2}}</b>
+          <p>
+             <label>Approximate Distance: </label>
+            <b>{{  Math.round((w_b * 0.26) * 100) / 100}}m</b>
+           </p>
       </article>
     </div>
     <div class="tile is-parent">
       <article class="tile is-child box" style="width:110px; height:105px;">
       <label>Direction 3: </label>
           <b>{{windDir_3}}</b>
+          <p>
+             <label>Approximate Distance: </label>
+            <b>{{  Math.round((w_c * 0.26) * 100) / 100}}m</b>
+           </p>
       </article> 
       <article class="tile is-child box" style="width:110px; height:105px;">
         <div class="block styles-box">
         <label>Direction 4: </label>
            <label><b>{{windDir_4}}</b> </label>
+           <p>
+             <label>Approximate Distance: </label>
+            <b>{{  Math.round((w_d * 0.26) * 100) / 100}}m</b>
+           </p>
         </div>
       </article>
     </div>
@@ -36,10 +54,10 @@
         <article class="tile is-child box"> 
           <h4>Sensor 1:</h4>
            <div class="block styles-box">
-           <label>{{s1}}% <i>Avg</i> </label>
+           <label>{{ Math.round(s1 * 100) / 100}}% <i>Avg</i> </label>
             <progress-bar :type="setLabel(s1)" :value="s1" :max="100"></progress-bar>
             <label> {{ppm_1}} ppm</label>
-            <progress-bar :type="setPpm(ppm_1)" :value="ppm_1" :max="1000"></progress-bar>
+            <progress-bar :type="setPpm(ppm_1)" :value="parseInt(ppm_1)" :max="10000"></progress-bar>
           </div>
         </article>
       </div>
@@ -47,10 +65,10 @@
        <article class="tile is-child box"> 
           <h4>Sensor 2:</h4>
            <div class="block styles-box">
-           <label>{{s2}}% <i>Avg</i> </label>
+           <label>{{Math.round(s2 * 100) / 100}}% <i>Avg</i> </label>
             <progress-bar :type="setLabel(s2)" :value="s2" :max="100"></progress-bar>
             <label> {{ppm_2}} ppm</label>
-            <progress-bar :type="setPpm(ppm_2)" :value="ppm_2" :max="1000"></progress-bar>
+            <progress-bar :type="setPpm(ppm_2)" :value="parseInt(ppm_2)" :max="10000"></progress-bar>
           </div>
         </article>
       </div>
@@ -58,10 +76,10 @@
         <article class="tile is-child box"> 
           <h4>Sensor 3:</h4>
            <div class="block styles-box">
-           <label>{{s3}}% <i>Avg</i> </label>
+           <label>{{Math.round(s3 * 100) / 100}}% <i>Avg</i> </label>
             <progress-bar :type="setLabel(s3)" :value="s3" :max="100"></progress-bar>
             <label> {{ppm_3}} ppm</label>
-            <progress-bar :type="setPpm(ppm_3)" :value="ppm_3" :max="1000"></progress-bar>
+            <progress-bar :type="setPpm(ppm_3)" :value="parseInt(ppm_3)" :max="10000"></progress-bar>
           </div>
         </article>
       </div>
@@ -69,10 +87,10 @@
         <article class="tile is-child box"> 
           <h4>Sensor 4:</h4>
            <div class="block styles-box">
-           <label>{{s4}}% <i>Avg</i> </label>
+           <label>{{ Math.round(s4 * 100) / 100  }}% <i>Avg</i> </label>
             <progress-bar :type="setLabel(s4)" :value="s4" :max="100"></progress-bar>
             <label> {{ppm_4}} ppm</label>
-            <progress-bar :type="setPpm(ppm_4)" :value="ppm_4" :max="1000"></progress-bar>
+            <progress-bar :type="setPpm(ppm_4)" :value="parseInt(ppm_4)" :max="10000"></progress-bar>
           </div>
         </article>
       </div>
@@ -147,7 +165,7 @@ export default {
       },
       series: [],
       props: {},
-      labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      labels: ['0', '1', '2', '3', '4'],
       linesOptions: {
         fullWidth: true,
         chartPadding: {
@@ -166,6 +184,11 @@ export default {
   },
   created: function () {
 
+  },
+  watch: {
+    // 's4': function (val) {
+    //   this.s4 = (
+    // }
   },
   computed: {
     linesData () {
@@ -224,10 +247,10 @@ export default {
         let diffB = moment().diff(moment(sensors[1].updated), 'seconds')
         let diffC = moment().diff(moment(sensors[2].updated), 'seconds')
         let diffD = moment().diff(moment(sensors[3].updated), 'seconds')
-        this.ppm_1 = 0
-        this.ppm_2 = 0
-        this.ppm_3 = 0
-        this.ppm_4 = 0
+        // this.ppm_1 = 0
+        // this.ppm_2 = 0
+        // this.ppm_3 = 0
+        // this.ppm_4 = 0
         $.each(data.active_sensors, (sensor, value) => {
           if ('group' in value) {
             if (sensor === '0001') {
@@ -241,10 +264,11 @@ export default {
             }
           }
         })
-        this.ppm_1 = sensors[0].ppm
-        this.ppm_2 = sensors[1].ppm
-        this.ppm_3 = sensors[2].ppm
-        this.ppm_4 = sensors[3].ppm
+
+        this.ppm_1 = sensors[0].ppm === 0 ? this.ppm_1 : sensors[0].ppm
+        this.ppm_2 = sensors[1].ppm === 0 ? this.ppm_2 : sensors[1].ppm
+        this.ppm_3 = sensors[2].ppm === 0 ? this.ppm_3 : sensors[2].ppm
+        this.ppm_4 = sensors[3].ppm === 0 ? this.ppm_4 : sensors[3].ppm
 
         if (diffA > interval) {
           this.w_a = this.ppm_1 = 0
@@ -307,13 +331,13 @@ export default {
           $.each(data.active_sensors, (sensor, value) => {
             if ('group' in value) {
               if (sensor === '0001') {
-                this.s1 = value.group.avg
+                this.s1 = (parseFloat(value.group.avg) / 10000) * 100
               } else if (sensor === '0002') {
-                this.s2 = value.group.avg
+                this.s2 = (parseFloat(value.group.avg) / 10000) * 100
               } else if (sensor === '0003') {
-                this.s3 = value.group.avg
+                this.s3 = (parseFloat(value.group.avg) / 10000) * 100
               } else if (sensor === '0004') {
-                this.s4 = value.group.avg
+                this.s4 = (parseFloat(value.group.avg) / 10000) * 100
               } else {
               }
             } else {
