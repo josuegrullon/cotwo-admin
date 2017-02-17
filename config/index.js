@@ -12,7 +12,7 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8040,
+    port: 80,
     proxyTable: {}
   }
 }

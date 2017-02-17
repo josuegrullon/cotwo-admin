@@ -4,7 +4,7 @@
    <!-- <div> -->
     <div class="tile is-parent">
       <article class="tile is-child box">
-          <iframe  class="content" src="http://cotwo-web.com"  
+          <iframe  class="content" src="http://138.197.7.114:82"  
         style=" width: 100%;  height:400px;"  scrolling="no"></iframe>
          <div class="tile is-parent">
       <article class="tile is-child box" style="width:110px; height:105px;">
@@ -302,7 +302,7 @@ export default {
   ready: function () {
     setInterval(() => {
       $.ajax({
-        url: 'http://cotwo-api.com/v1/movements',
+        url: 'http://138.197.7.114:81/v1/movements',
         method: 'GET',
         dataType: 'json',
         async: true,
