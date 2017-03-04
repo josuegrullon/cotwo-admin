@@ -4,7 +4,7 @@
    <!-- <div> -->
     <div class="tile is-parent">
       <article class="tile is-child box">
-          <iframe  class="content" src="http://138.197.7.114:82"  
+          <iframe  class="content" src="http://localhost:82"  
         style=" width: 100%;  height:400px;"  scrolling="no"></iframe>
          <div class="tile is-parent">
       <article class="tile is-child box" style="width:110px; height:105px;">
@@ -124,6 +124,22 @@
       </div>
     </div>
 </div>
+<div>
+    <div class="tile is-ancestor">
+      <div class="tile is-parent">
+        <article class="tile is-child box">
+          <h4 class="title">Temp: {{Math.round((temperature - 275) * 100) / 100}} C</h4>
+        </article>
+        <article class="tile is-child box">
+          <h4 class="title">Humidity: {{humidity}} %</h4>
+        </article>
+         <article class="tile is-child box">
+          <h4 class="title">Presure: {{presure}} hPa</h4>
+        </article>
+       
+      </div>
+    </div>
+</div>
 </template>
 
 <script>
@@ -145,6 +161,9 @@ export default {
   data () {
     return {
       current: {},
+      humidity: 0,
+      presure: 0,
+      temperature: 0,
       w_a: '',
       w_b: '',
       w_c: '',
@@ -302,7 +321,22 @@ export default {
   ready: function () {
     setInterval(() => {
       $.ajax({
-        url: 'http://138.197.7.114:81/v1/movements',
+        url: 'http://api.openweathermap.org/data/2.5/weather?q=DominicanRepublic,SantoDomingo&appid=0f0fd0473ef1e111d3fdda0d195dcca2',
+        method: 'GET',
+        dataType: 'json',
+        async: true,
+        success: (data) => {
+          console.log(data.main)
+          this.humidity = data.main.humidity
+          this.temperature = data.main.temp
+          this.presure = data.main.pressure
+        }
+      })
+    }, 3000)
+
+    setInterval(() => {
+      $.ajax({
+        url: 'http://localhost:81/v1/movements',
         method: 'GET',
         dataType: 'json',
         async: true,
