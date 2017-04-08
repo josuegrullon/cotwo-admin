@@ -25,8 +25,16 @@ import Levelbar from './components/Levelbar'
 import FooterBar from './components/FooterBar'
 
 export default {
+  http: {
+    root: '/root',
+    emulateJSON: true,
+    emulateHTTP: true,
+    options: {
+      emulateJSON: true,
+      emulateHTTP: true
+    }
+  },
   store,
-
   vuex: {
     getters: {
       sidebar: state => state.sidebar

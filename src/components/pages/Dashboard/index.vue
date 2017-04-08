@@ -4,7 +4,7 @@
    <!-- <div> -->
     <div class="tile is-parent">
       <article class="tile is-child box">
-          <iframe  class="content" src="http://localhost:82"  
+          <iframe  class="content"  v-bind:src='map_url'
         style=" width: 100%;  height:400px;"  scrolling="no"></iframe>
          <div class="tile is-parent">
       <article class="tile is-child box" style="width:110px; height:105px;">
@@ -148,6 +148,8 @@ import ProgressBar from '../../ui/ProgressBar'
 import Chartist from '../../ui/Chartist'
 import $ from 'jquery'
 import moment from 'moment'
+import config from '../../../config'
+const { env } = config
 
 Vue.config.debug = true
 
@@ -198,11 +200,12 @@ export default {
       options: {
         segmentShowStroke: false
       },
-      backgroundColor: ['#4ae748']
+      backgroundColor: ['#4ae748'],
+      map_url: ''
     }
   },
   created: function () {
-
+    this.map_url = env.MAP_URL
   },
   watch: {
     // 's4': function (val) {
@@ -336,7 +339,7 @@ export default {
 
     setInterval(() => {
       $.ajax({
-        url: 'http://localhost:81/v1/movements',
+        url: env.API_URL + 'movements',
         method: 'GET',
         dataType: 'json',
         async: true,

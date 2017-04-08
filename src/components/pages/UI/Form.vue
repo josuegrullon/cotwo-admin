@@ -57,7 +57,7 @@ export default {
     submitData: function () {
       var that = this
       $.ajax({
-        url: 'http://cotwo-api.com/v1/subscribe',
+        url: 'http://localhost/v1/subscribe',
         method: 'POST',
         dataType: 'json',
         data: {

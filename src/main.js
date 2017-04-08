@@ -14,6 +14,7 @@ Vue.use(Resource)
 
 import App from './App'
 import Dashboard from './components/pages/Dashboard/'
+import Reports from './components/pages/Reports/'
 
 const { sidebar } = config
 const router = new Router({
@@ -22,9 +23,13 @@ const router = new Router({
   linkActiveClass: 'is-active'
 })
 
+Vue.http.options.emulateJSON = true
+Vue.http.options.emulateHTTP = true
+
 Vue.http.interceptors.push(() => {
   return {
     request (request) {
+      console.log(request)
       NProgress.inc(0.2)
       return request
     },
@@ -62,6 +67,10 @@ router.map({
   '/dashboard': {
     name: 'Dashboard',
     component: Dashboard
+  },
+  '/reports': {
+    name: 'Reports',
+    component: Reports
   },
   // http://router.vuejs.org/en/lazy.html
   '/charts/chartJs': {

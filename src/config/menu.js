@@ -15,7 +15,7 @@ export default [
     icon: 'fa-cogs'
   },
   {
-    link: '',
+    link: 'Reports',
     label: 'Reports',
     icon: 'fa-file'
   }
