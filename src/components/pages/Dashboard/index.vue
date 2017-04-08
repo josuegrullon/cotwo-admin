@@ -207,10 +207,8 @@ export default {
   created: function () {
     this.map_url = env.MAP_URL
   },
+
   watch: {
-    // 's4': function (val) {
-    //   this.s4 = (
-    // }
   },
   computed: {
     linesData () {
@@ -329,7 +327,7 @@ export default {
         dataType: 'json',
         async: true,
         success: (data) => {
-          console.log(data.main)
+          // console.log(data.main)
           this.humidity = data.main.humidity
           this.temperature = data.main.temp
           this.presure = data.main.pressure

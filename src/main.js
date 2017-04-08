@@ -3,6 +3,8 @@ import init from './init'
 
 init(config)
 
+require('assets/bootstrap.min.css')
+
 import Vue from 'vue'
 import Router from 'vue-router'
 import Resource from 'vue-resource'
