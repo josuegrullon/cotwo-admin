@@ -4,15 +4,15 @@
     <div class="tile is-parent">
       <article class="tile is-child box">
       <ul class="nav nav-tabs">
-  <!-- <li class="active"><a data-toggle="tab" href="#home">General</a></li> -->
-  <li class="active"><a data-toggle="tab" href="#module1" @click="loadModule('m1')">Module 1</a></li>
+  <li class="active"><a data-toggle="tab" href="#home">General</a></li>
+  <li><a data-toggle="tab" href="#module1" @click="loadModule('m1')">Module 1</a></li>
   <li><a data-toggle="tab" href="#module2"@click="loadModule('m2')">Module 2</a></li>
   <li><a data-toggle="tab" href="#module3"@click="loadModule('m3')">Module 3</a></li>
   <li><a data-toggle="tab" href="#module4"@click="loadModule('m4')">Module 4</a></li>
 </ul>
 
 <div class="tab-content">
-  <div id="home" class="tab-pane fade in">
+  <div id="home" class="tab-pane fade in active">
     <p>
       <div class="md-12">
         <table id="general"
@@ -23,7 +23,7 @@
           data-show-columns="true"
           data-show-export="true"
           data-detail-view="true"
-          data-detail-formatter="detailFormatter"
+          data-detail-formatter=detailFormatter
           data-minimum-count-columns="2"
           data-show-pagination-switch="true"
           data-pagination="true"
@@ -35,7 +35,7 @@
       </div>
     </p>
   </div>
-  <div id="module1" class="tab-pane fade in active">
+  <div id="module1" class="tab-pane fade">
     <p>
       <div class="md-12">
         <table id="m1"
@@ -159,7 +159,6 @@ export default {
   },
 
   created: function () {
-    this.loadModule('m1')
   },
 
   components: {
@@ -191,6 +190,14 @@ export default {
       return moment().format('LLLL')
     },
 
+    detailFormatter (index, row) {
+      let html = []
+      $.each(row, function (key, value) {
+        html.push('<p><b>' + key + ':</b> ' + value + '</p>')
+      })
+      return html.join('')
+    },
+
     getGeneralData () {
       $.ajax({
         url: env.API_URL + 'datatable',
@@ -198,7 +205,7 @@ export default {
         dataType: 'json',
         async: true,
         success: (data) => {
-          console.log(data)
+          // console.log(data)
           let $table = $('#general')
           // console.log(jsondata)
           $table.bootstrapTable({
@@ -207,34 +214,40 @@ export default {
             columns: [
               [
                 {
-                  field: 'identifier',
-                  checkbox: true,
-                  rowspan: 2,
-                  align: 'center',
-                  valign: 'middle'
-                }, {
-                  title: 'Item ID',
-                  field: 'velocity',
-                  rowspan: 2,
-                  align: 'center',
-                  valign: 'middle',
+                  field: 'avg_data.ppm',
+                  title: 'CO2 (Avg ppm)',
                   sortable: true
-                }, {
-                  title: 'Item Detail',
-                  colspan: 3,
-                  align: 'center'
-                }
-              ],
-              [
+                },
                 {
-                  field: 'identifier',
-                  title: 'Item Name'
-                }, {
-                  field: 'velocity',
-                  title: 'ItemPrice'
-                }, {
-                  field: 'velocity',
-                  title: 'Item Operate'
+                  field: 'avg_data.dir',
+                  title: 'Wind Direction (Avg)',
+                  sortable: true
+                },
+                {
+                  field: 'avg_data.velocity',
+                  title: 'Velocity (Avg m/s)',
+                  sortable: true
+                },
+                {
+                  field: 'avg_data.temperature',
+                  title: 'Temperature (Avg C)',
+                  sortable: true
+                },
+                {
+                  field: 'avg_data.presure',
+                  title: 'Pressure (Avg hPa)',
+                  sortable: true
+                },
+                {
+                  field: 'avg_data.humidity',
+                  title: 'Humidity (Avg %)',
+                  sortable: true
+                },
+                {
+                  field: 'f_date',
+                  title: 'Time',
+                  sortable: true,
+                  footerFormatter: 'formatDate'
                 }
               ]
             ]
@@ -251,7 +264,7 @@ export default {
       if (id === 'm3') identifier = '0003'
       if (id === 'm4') identifier = '0004'
 
-      // console.log(identifier)
+      console.log(identifier)
       $.ajax({
         url: env.API_URL + 'datatable/' + identifier,
         method: 'GET',
@@ -265,32 +278,6 @@ export default {
             data: data,
             height: '300px',
             columns: [
-              // [
-              //   // {
-              //   //   // field: 'identifier',
-              //   //   // checkbox: true,
-              //   //   // rowspan: 2,
-              //   //   align: 'center',
-              //   //   // valign: 'middle',
-              //   //   title: 'Item IDcd'
-              //   // },
-              //   {
-              //     title: 'Modules Information',
-              //     colspan: 3,
-              //     align: 'center',
-              //     // valign: 'middle',
-              //     sortable: true
-              //   }, {
-              //     title: 'Weather Information',
-              //     colspan: 3,
-              //     align: 'center'
-              //   },
-              //   {
-              //     title: 'Date',
-              //     colspan: 1,
-              //     align: 'center'
-              //   }
-              // ],
               [
                 {
                   field: 'ppm',
@@ -340,7 +327,109 @@ export default {
   },
 
   ready: function () {
-    // this.getGeneralData()
+    this.getGeneralData()
+    window.detailFormatter = (index, row) => {
+      let A = row.sensors['0001']
+      let B = row.sensors['0002']
+      let C = row.sensors['0003']
+      let D = row.sensors['0004']
+      return [
+        '<table>',
+        '<thead>',
+        '<tr>',
+        '<th>Module 0001</th>',
+        '<th>Module 0002</th>',
+        '<th>Module 0003</th>',
+        '<th>Module 0004</th>',
+        '<tr>',
+        '</thead>',
+        '<tr>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Direction:</b></span> <span >' + A.dir + '</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Direction:</b></span> <span >' + B.dir + '</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Direction:</b></span> <span >' + C.dir + '</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Direction:</b></span> <span >' + D.dir + '</span> ',
+        '</td>',
+        '</tr>',
+        '<tr>',
+        '<td>',
+        '<span style="display: inline-block;"><b>CO2:</b></span> <span >' + A.ppm + ' (ppm)</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>CO2:</b></span> <span >' + B.ppm + ' (ppm)</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>CO2:</b></span> <span >' + C.ppm + ' (ppm)</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>CO2:</b></span> <span >' + D.ppm + ' (ppm)</span> ',
+        '</td>',
+        '</tr>',
+        '<tr>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Wind Velocity:</b></span> <span >' + A.velocity + ' (m/s)</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Wind Velocity:</b></span> <span >' + B.velocity + ' (m/s)</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Wind Velocity:</b></span> <span >' + C.velocity + ' (m/s)</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Wind Velocity:</b></span> <span >' + D.velocity + ' (m/s)</span> ',
+        '</td>',
+        '</tr>',
+        '<tr>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Temperature:</b></span> <span >' + A.temperature + ' (C)</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Temperature:</b></span> <span >' + B.temperature + ' (C)</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Temperature:</b></span> <span >' + C.temperature + ' (C)</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Temperature:</b></span> <span >' + D.temperature + ' (C)</span> ',
+        '</td>',
+        '</tr>',
+        '<tr>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Pressure:</b></span> <span >' + A.presure + ' (hPa)</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Pressure:</b></span> <span >' + B.presure + ' (hPa)</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Pressure:</b></span> <span >' + C.presure + ' (hPa)</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Pressure:</b></span> <span >' + D.presure + ' (hPa)</span> ',
+        '</td>',
+        '</tr>',
+        '<tr>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Humidity:</b></span> <span >' + A.humidity + ' (%)</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Humidity:</b></span> <span >' + B.humidity + ' (%)</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Humidity:</b></span> <span >' + C.humidity + ' (%)</span> ',
+        '</td>',
+        '<td>',
+        '<span style="display: inline-block;"><b>Humidity:</b></span> <span >' + D.humidity + ' (%)</span> ',
+        '</td>',
+        '</tr>',
+        '</table>'
+      ].join('')
+    }
   }
 }
 </script>
