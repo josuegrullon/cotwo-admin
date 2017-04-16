@@ -74,6 +74,10 @@ router.map({
     name: 'Reports',
     component: Reports
   },
+  '/server': {
+    name: 'Server',
+    component: lazyLoading('./components/pages/UI/Server')
+  },
   // http://router.vuejs.org/en/lazy.html
   '/charts/chartJs': {
     name: 'ChartJs',

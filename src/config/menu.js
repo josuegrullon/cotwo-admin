@@ -10,8 +10,8 @@ export default [
     icon: 'fa-laptop'
   },
   {
-    link: '',
-    label: 'Energy Performance',
+    link: 'Server',
+    label: 'Server Performance',
     icon: 'fa-cogs'
   },
   {
