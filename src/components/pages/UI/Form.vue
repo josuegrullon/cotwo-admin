@@ -24,6 +24,8 @@
 import Vue from 'vue'
 import Message from '../../ui/Message'
 import $ from 'jquery'
+import config from '../../../config'
+const { env } = config
 
 const MessageComponent = Vue.extend(Message)
 
@@ -46,7 +48,8 @@ export default {
 
   data () {
     return {
-      email: ''
+      email: '',
+      url: ''
     }
   },
 
@@ -57,7 +60,7 @@ export default {
     submitData: function () {
       var that = this
       $.ajax({
-        url: 'http://localhost/v1/subscribe',
+        url: this.url + 'subscribe',
         method: 'POST',
         dataType: 'json',
         data: {
@@ -90,6 +93,7 @@ export default {
   },
 
   created () {
+    this.url = env.API_URL
   }
 }
 </script>
