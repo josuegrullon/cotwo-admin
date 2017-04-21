@@ -6,7 +6,7 @@ export default [
   },
   {
     link: 'Form',
-    label: 'Newsletter',
+    label: 'Email Alerts',
     icon: 'fa-laptop'
   },
   {

@@ -3,7 +3,7 @@
     <div class="tile is-ancestor">
       <div class="tile is-parent">
         <article class="tile is-child box">
-          <h1 class="title">Subscribe to our Newsletter</h1>
+          <h1 class="title">Subscribe to our Email Alerts</h1>
             <div class="control is-horizontal"  id="email">
               <div class="control is-grouped">
                 <p class="control is-expanded">
