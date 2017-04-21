@@ -230,7 +230,7 @@ export default {
                 },
                 {
                   field: 'avg_data.temperature',
-                  title: 'Temperature (Avg C)',
+                  title: 'Temperature (Avg K)',
                   sortable: true
                 },
                 {
@@ -296,7 +296,7 @@ export default {
                 },
                 {
                   field: 'temperature',
-                  title: 'Temperature (C)',
+                  title: 'Temperature (K)',
                   sortable: true
                 },
                 {
