@@ -14,7 +14,7 @@
         </p>
         <p>
             <label>Approximate Distance: </label>
-            <b>{{  Math.round((w_a * 0.26) * 100) / 100}}m</b>
+            <b>{{dist_1}}m</b>
            </p>
       </article> 
       <article class="tile is-child box" style="width:110px; height:105px;">
@@ -22,7 +22,7 @@
           <b>{{windDir_2}}</b>
           <p>
              <label>Approximate Distance: </label>
-            <b>{{  Math.round((w_b * 0.26) * 100) / 100}}m</b>
+            <b>{{  dist_2}}m</b>
            </p>
       </article>
     </div>
@@ -32,7 +32,7 @@
           <b>{{windDir_3}}</b>
           <p>
              <label>Approximate Distance: </label>
-            <b>{{  Math.round((w_c * 0.26) * 100) / 100}}m</b>
+            <b>{{  dist_3}}m</b>
            </p>
       </article> 
       <article class="tile is-child box" style="width:110px; height:105px;">
@@ -41,7 +41,7 @@
            <label><b>{{windDir_4}}</b> </label>
            <p>
              <label>Approximate Distance: </label>
-            <b>{{  Math.round((w_d * 0.26) * 100) / 100}}m</b>
+            <b>{{  dist_4}}m</b>
            </p>
         </div>
       </article>
@@ -170,6 +170,10 @@ export default {
       w_b: '',
       w_c: '',
       w_d: '',
+      dist_1: '--',
+      dist_2: '--',
+      dist_3: '--',
+      dist_4: '--',
       ppm_1: 0,
       ppm_2: 0,
       ppm_3: 0,
@@ -261,16 +265,13 @@ export default {
         var info = data.sensors_current_union
         var series = data.sensors_current_info
 
-        let interval = 10
+        let interval = 1000
         let sensors = info[4]
         let diffA = moment().diff(moment(sensors[0].updated), 'seconds')
         let diffB = moment().diff(moment(sensors[1].updated), 'seconds')
         let diffC = moment().diff(moment(sensors[2].updated), 'seconds')
         let diffD = moment().diff(moment(sensors[3].updated), 'seconds')
-        // this.ppm_1 = 0
-        // this.ppm_2 = 0
-        // this.ppm_3 = 0
-        // this.ppm_4 = 0
+
         $.each(data.active_sensors, (sensor, value) => {
           if ('group' in value) {
             if (sensor === '0001') {
@@ -290,27 +291,80 @@ export default {
         this.ppm_3 = sensors[2].ppm === 0 ? this.ppm_3 : sensors[2].ppm
         this.ppm_4 = sensors[3].ppm === 0 ? this.ppm_4 : sensors[3].ppm
 
+        // this.dist_1 = this.ppm_1 === 0 ? '--' : sensors[0].approx_distance_m
+        // this.dist_2 = this.ppm_2 === 0 ? '--' : sensors[1].approx_distance_m
+        // this.dist_3 = this.ppm_3 === 0 ? '--' : sensors[2].approx_distance_m
+        // this.dist_4 = this.ppm_4 === 0 ? '--' : sensors[3].approx_distance_m
+
+        if (this.ppm_1 === 0) {
+          if (this.s1 === 0) {
+            this.dist_1 = '--'
+          } else {
+            if ('group' in data.active_sensors['0001']) {
+              this.dist_1 = data.active_sensors['0001'].group.approx_distance_m
+            }
+          }
+        } else {
+          this.dist_1 = sensors[0].approx_distance_m
+        }
+
+        if (this.ppm_2 === 0) {
+          if (this.s2 === 0) {
+            this.dist_2 = '--'
+          } else {
+            if ('group' in data.active_sensors['0002']) {
+              this.dist_2 = data.active_sensors['0002'].group.approx_distance_m
+            }
+          }
+        } else {
+          this.dist_2 = sensors[1].approx_distance_m
+        }
+
+        if (this.ppm_3 === 0) {
+          if (this.s3 === 0) {
+            this.dist_3 = '--'
+          } else {
+            if ('group' in data.active_sensors['0003']) {
+              this.dist_3 = data.active_sensors['0003'].group.approx_distance_m
+            }
+          }
+        } else {
+          this.dist_3 = sensors[2].approx_distance_m
+        }
+
+        if (this.ppm_4 === 0) {
+          if (this.s4 === 0) {
+            this.dist_4 = '--'
+          } else {
+            if ('group' in data.active_sensors['0004']) {
+              this.dist_4 = data.active_sensors['0004'].group.approx_distance_m
+            }
+          }
+        } else {
+          this.dist_4 = sensors[3].approx_distance_m
+        }
+
         if (diffA > interval) {
           this.w_a = this.ppm_1 = 0
-          this.windDir_1 = '--'
+          this.windDir_1 = this.dist_1 = '--'
           series[0] = [0, 0, 0, 0, 0]
           this.s1 = 0
         }
         if (diffB > interval) {
           this.w_b = this.ppm_2 = 0
-          this.windDir_2 = '--'
+          this.windDir_2 = this.dist_2 = '--'
           series[1] = [0, 0, 0, 0, 0]
         }
 
         if (diffC > interval) {
           this.w_c = this.ppm_3 = 0
-          this.windDir_3 = '--'
+          this.windDir_3 = this.dist_3 = '--'
           series[2] = [0, 0, 0, 0, 0]
         }
 
         if (diffD > interval) {
           this.w_d = this.ppm_4 = 0
-          this.windDir_4 = '--'
+          this.windDir_4 = this.dist_4 = '--'
           series[3] = [0, 0, 0, 0, 0]
           this.s4 = 0
         }
@@ -358,10 +412,10 @@ export default {
           $('.ct-series-d *').css('stroke', this.colors.sensor_d)
 
           if (data.active_sensors.length === 0) {
-            this.s1 = 0
-            this.s2 = 0
-            this.s3 = 0
-            this.s4 = 0
+            // this.s1 = 0
+            // this.s2 = 0
+            // this.s3 = 0
+            // this.s4 = 0
           }
           $.each(data.active_sensors, (sensor, value) => {
             if ('group' in value) {
