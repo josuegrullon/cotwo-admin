@@ -265,7 +265,7 @@ export default {
         var info = data.sensors_current_union
         var series = data.sensors_current_info
 
-        let interval = 1000
+        let interval = 100
         let sensors = info[4]
         let diffA = moment().diff(moment(sensors[0].updated), 'seconds')
         let diffB = moment().diff(moment(sensors[1].updated), 'seconds')
@@ -296,53 +296,61 @@ export default {
         // this.dist_3 = this.ppm_3 === 0 ? '--' : sensors[2].approx_distance_m
         // this.dist_4 = this.ppm_4 === 0 ? '--' : sensors[3].approx_distance_m
 
-        if (this.ppm_1 === 0) {
-          if (this.s1 === 0) {
-            this.dist_1 = '--'
-          } else {
+        // if (this.ppm_1 === 0) {
+        //   if (this.s1 === 0) {
+        //     this.dist_1 = '--'
+        //   } else {
             if ('group' in data.active_sensors['0001']) {
               this.dist_1 = data.active_sensors['0001'].group.approx_distance_m
+            } else {
+              this.dist_1 = '--'
             }
-          }
-        } else {
-          this.dist_1 = sensors[0].approx_distance_m
-        }
+        //   }
+        // } else {
+        //   this.dist_1 = sensors[0].approx_distance_m
+        // }
 
-        if (this.ppm_2 === 0) {
-          if (this.s2 === 0) {
-            this.dist_2 = '--'
-          } else {
+        // if (this.ppm_2 === 0) {
+        //   if (this.s2 === 0) {
+        //     this.dist_2 = '--'
+        //   } else {
             if ('group' in data.active_sensors['0002']) {
               this.dist_2 = data.active_sensors['0002'].group.approx_distance_m
+            } else {
+              this.dist_1 = '--'
             }
-          }
-        } else {
-          this.dist_2 = sensors[1].approx_distance_m
-        }
+        //   }
+        // } else {
+        //   this.dist_2 = sensors[1].approx_distance_m
+        // }
 
-        if (this.ppm_3 === 0) {
-          if (this.s3 === 0) {
-            this.dist_3 = '--'
-          } else {
+        // if (this.ppm_3 === 0) {
+        //   if (this.s3 === 0) {
+        //     this.dist_3 = '--'
+        //   } else {
             if ('group' in data.active_sensors['0003']) {
               this.dist_3 = data.active_sensors['0003'].group.approx_distance_m
+            } else {
+              this.dist_3 = '--'
             }
-          }
-        } else {
-          this.dist_3 = sensors[2].approx_distance_m
-        }
+        //   }
+        // } else {
+        //   this.dist_3 = sensors[2].approx_distance_m
+        // }
 
-        if (this.ppm_4 === 0) {
-          if (this.s4 === 0) {
-            this.dist_4 = '--'
-          } else {
+        // if (this.ppm_4 === 0) {
+        //   if (this.s4 === 0) {
+        //     this.dist_4 = '--'
+        //   } else {
             if ('group' in data.active_sensors['0004']) {
               this.dist_4 = data.active_sensors['0004'].group.approx_distance_m
+            } else {
+              this.dist_4 = '--'
             }
-          }
-        } else {
-          this.dist_4 = sensors[3].approx_distance_m
-        }
+        //   }
+        // } else {
+        //   this.dist_4 = sensors[3].approx_distance_m
+        // }
 
         if (diffA > interval) {
           this.w_a = this.ppm_1 = 0
